@@ -1,0 +1,7 @@
+<p>Hi
+
+<p>
+  <a href=@{AuthR LoginR}>Sign In
+
+<p>
+  <a href=@{CreateInvoiceProfileR}>Create Invoice Profile

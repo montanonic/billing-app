@@ -1,0 +1,6 @@
+/* Makes all form fields that are marked as optional clearly optional to the
+client.
+*/
+form .optional::after {
+  content: " (optional)";
+}

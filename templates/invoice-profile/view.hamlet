@@ -1,0 +1,17 @@
+<h1>Profile: #{invoiceProfileDisplayName}
+
+<h2>Search terms:
+$case (setToList invoiceProfileSearchTerms)
+  $of []
+    <p>No search terms set.
+  $of terms
+    <p>#{intercalate ", " terms}
+
+<h2>Hour Limit:
+$maybe hl <- invoiceProfileHourLimit
+  <p>#{hl} hrs
+
+$nothing
+  <p>No hour limit in place.
+
+<h2>End

@@ -1,0 +1,15 @@
+/static StaticR Static appStatic
+/auth   AuthR   Auth   getAuth
+
+/favicon.ico FaviconR GET
+/robots.txt RobotsR GET
+
+/ HomeR GET
+
+/google/#UserId GoogleTestR GET
+
+-- shows all your Invoice Profiles
+invoice-profile/ InvoiceProfilesR GET
+-- view an individual Invoice Profile
+invoice-profile/#Text ViewInvoiceProfileR GET
+!/invoice-profile/create CreateInvoiceProfileR GET POST

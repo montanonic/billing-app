@@ -1,0 +1,63 @@
+User
+    ident Text
+    name Text Maybe
+    avatarUrl Text Maybe -- link to the user's google avatar
+    accessToken ByteString Maybe SafeToRemove
+
+    createdAt UTCTime
+
+    UniqueUser ident
+    deriving Typeable
+
+Email
+    userId UserId Maybe
+    email Text
+    UniqueEmail email
+
+UserProfile
+    userId UserId
+
+    preferredEmail EmailId -- the email that the user would prefer to be
+      -- contacted at and have notifications sent to.
+
+InvoiceProfile
+    userId UserId
+
+    displayName Text -- the visible name of the Profile; this is what renders on
+      -- the website, whereas 'name; is internal.
+
+    name Text -- lowercase 'displayName'; used to prevent creation of Profiles
+      -- with identical names, just different cases.
+
+    searchTerms (Set Text) -- the terms used to find billable times for this
+      -- client by searching the calendar for them
+
+    hourLimit Int Maybe -- Hour limit notification. Tells the app when to notify
+      -- you that you've reached the given number of hours
+
+    -- howToNotify [NotifyBy] Maybe -- used in conjuction with hourLimit. Uses
+      -- a Haskell sum type that contains all the possible options for a user
+      -- to receive notifications. A user can select more than one notification
+      -- type if they would like.
+
+    hourlyRate Currency Maybe -- how much the user charges this client per hour
+
+    milageRate Currency Maybe -- how much the user charges for miles incurred
+      -- while working for this client, per mile
+
+      -- milage often requires location information when billing, to explain
+      -- where the person travelled to and from, and justify the expense
+
+    allDayHours Int Maybe -- All Day hours tells the application how many
+      -- hours the user would bill the client for, for calendar events marked
+      -- "all day", which blocks out an entire day and doesn't specify hours.
+      -- defaults to 8 hours. The user can set their own default in their
+      -- profile.
+
+      -- user can write in calendar markup language the specific amount of hours
+      -- to bill for in the event's description as well.
+
+    billTo Text Maybe -- billing address, email
+
+    UniqueInvoiceProfile userId name
+    deriving Show Read
