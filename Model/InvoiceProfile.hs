@@ -1,6 +1,21 @@
-module Model.Invoice.Profile where
+module Model.InvoiceProfile where
 
-import Import
+import Import.NoFoundation
+
+newtype CachedMaybeInvoiceProfile
+    = CachedMaybeInvoiceProfile
+        { unCachedMaybeInvoiceProfile :: Maybe InvoiceProfile }
+    deriving Typeable
+
+maybeInvoiceProfile :: InvoiceProfileId -> DB (Maybe InvoiceProfile)
+maybeInvoiceProfile ipid
+    = map unCachedMaybeInvoiceProfile
+    . cached
+    . map CachedMaybeInvoiceProfile
+    $ get ipid
+
+getInvoiceProfile404 :: InvoiceProfileId -> DB InvoiceProfile
+getInvoiceProfile404 ipid = maybeInvoiceProfile ipid >>= maybe notFound return
 
 {-
 createInvoiceProfile ::

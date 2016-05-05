@@ -29,7 +29,7 @@ library
                      Import.AgdaUtils.Either
                      Model
                      Model.Currency
-                     Model.Invoice.Profile
+                     Model.InvoiceProfile
                      Model.Persistent.Field.CaseInsensitive
                      Model.Persistent.Field.Currency
                      Settings

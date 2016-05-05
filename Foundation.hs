@@ -10,6 +10,9 @@ import Yesod.Core.Types     (Logger)
 import qualified Yesod.Core.Unsafe as Unsafe
 import qualified Data.CaseInsensitive as CI
 import qualified Data.Text.Encoding as TE
+-- Imports above this comment belong to the original scaffolding.
+
+import Model.InvoiceProfile (maybeInvoiceProfile)
 
 -- | The foundation datatype for your application. This can be a good place to
 -- keep settings and values requiring initialization before your application
@@ -82,9 +85,6 @@ mkYesodData "App" $(parseRoutesFile "config/routes")
 -- | A convenient synonym for creating forms.
 type Form x = Html -> MForm (HandlerT App IO) (FormResult x, Widget)
 
--- | A convenient synonym for defining database actions.
-type DB a = forall (m :: * -> *). (MonadIO m, Functor m) => SqlPersistT m a
-
 -- Please see the documentation for the Yesod typeclass. There are a number
 -- of settings which can be configured by overriding methods here.
 instance Yesod App where
@@ -136,7 +136,7 @@ instance Yesod App where
     -- ensures that a user can only view profiles that they themselves created
     isAuthorized (ViewInvoiceProfileR pid) _ = do
         uid <- requireAuthId
-        muid' <- runDB $ (map invoiceProfileUserId) <$> get pid
+        muid' <- runDB $ (map invoiceProfileUserId) <$> maybeInvoiceProfile pid
         if  -- you are the creator of the entity
             | Just uid == muid' -> return Authorized
             | otherwise -> do
