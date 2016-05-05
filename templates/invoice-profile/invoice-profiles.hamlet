@@ -1,5 +1,5 @@
 $newline never
-$forall (Entity _ ip) <- profiles
+$forall (Entity ipid ip) <- profiles
   <p>
-    <a href=@{ViewInvoiceProfileR (invoiceProfileName ip)}>
+    <a href=@{ViewInvoiceProfileR ipid}>
       #{invoiceProfileDisplayName ip}

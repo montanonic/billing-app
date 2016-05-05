@@ -10,9 +10,6 @@ import Yesod.Core.Types     (Logger)
 import qualified Yesod.Core.Unsafe as Unsafe
 import qualified Data.CaseInsensitive as CI
 import qualified Data.Text.Encoding as TE
--- Above this line are imports that come default with the scaffolding
-
-import qualified Data.Text as Text
 
 -- | The foundation datatype for your application. This can be a good place to
 -- keep settings and values requiring initialization before your application
@@ -137,22 +134,14 @@ instance Yesod App where
     isAuthorized RobotsR _ = return Authorized
 
     -- ensures that a user can only view profiles that they themselves created
-    isAuthorized (ViewInvoiceProfileR name) _ = do
+    isAuthorized (ViewInvoiceProfileR pid) _ = do
         uid <- requireAuthId
-        -- sees if a profile owned by the current user exists with the given
-        -- name. We strip whitespace and make the name lowercase, since that's
-        -- how InvoiceProfileName's are transformed as well.
-        -- TODO: Make a newtype for lower-case names, and make that a Persistent
-        -- Field.
-        mprofile <- runDB $ getBy $
-            UniqueInvoiceProfile uid (toLower $ Text.strip name)
-        case mprofile of
-            Nothing -> do
-                addMessage "warning" "Not a valid link to an Invoice Profile"
+        muid' <- runDB $ (map invoiceProfileUserId) <$> get pid
+        if  -- you are the creator of the entity
+            | Just uid == muid' -> return Authorized
+            | otherwise -> do
+                addMessage "warning" "Not a valid link to your Invoice Profile"
                 redirect InvoiceProfilesR
-            Just (Entity ipid _) -> do
-                setSession "INVOICE_PROFILE_ID" (showT ipid)
-                return Authorized
 
     -- Default to Authorized for now.
     isAuthorized _ _ = return Authorized

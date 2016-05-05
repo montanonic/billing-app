@@ -20,9 +20,9 @@ postCreateInvoiceProfileR = do
     ((res, _), _) <- runFormPost $ invoiceProfileForm uid
     case res of
         FormSuccess ip -> do
-            runDB $ insert_ ip
+            ipid <- runDB $ insert ip
             addMessage "success" [shamlet|Profile successfully created.|]
-            redirect (ViewInvoiceProfileR (invoiceProfileName ip))
+            redirect (ViewInvoiceProfileR ipid)
 
         _ -> getCreateInvoiceProfileR
 {-
