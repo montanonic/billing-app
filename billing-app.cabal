@@ -33,6 +33,7 @@ library
                      Model.PersistField.CaseInsensitive
                      Model.PersistField.Currency
                      Model.PersistField.TimeZone
+                     Model.PersistHelpers.CalendarEvents
                      Settings
                      Settings.StaticFiles
                      Handler.Common

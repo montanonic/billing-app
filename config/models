@@ -72,7 +72,7 @@ CalendarEvent
       -- timestamp).
     updated UTCTime -- ^ Last modification time of the event (as a
       -- RFC3339 timestamp).
-    summary Text -- ^ Title of the event.
+    summary Text Maybe -- ^ Title of the event.
     description Text Maybe -- ^ Description of the event.
     location Text Maybe -- ^ Geographic location of the event as free-form
       -- text

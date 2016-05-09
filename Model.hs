@@ -31,7 +31,7 @@ instance FromJSON CalendarEvent where
         calendarEventHtmlLink <- o .: "htmlLink"
         calendarEventCreated <- o .: "created"
         calendarEventUpdated <- o .: "updated"
-        calendarEventSummary <- o .: "summary"
+        calendarEventSummary <- o .:? "summary"
         calendarEventDescription <- o .:? "description"
         calendarEventLocation <- o .:? "location"
         calendarEventColorId <- o .:? "colorId"
