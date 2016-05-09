@@ -1,9 +1,8 @@
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 
-module Model.Persistent.Field.Currency where
+module Model.PersistField.Currency where
 
-import ClassyPrelude
-import Database.Persist
+import ClassyPrelude.Yesod
 import Database.Persist.Sql
 
 import Model.Currency

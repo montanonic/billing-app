@@ -13,7 +13,7 @@ module Import.AgdaUtils.Either
   , allLeft, allRight
   ) where
 
-import ClassyPrelude
+import ClassyPrelude.Yesod
 
 -- | Loop while we have an exception.
 

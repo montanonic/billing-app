@@ -9,13 +9,11 @@ module Model.Currency
     , unsafeGetCurrency
     , unsafeMakeCurrency
 
-    , parseCurrencyUnsafe
-    )
-    where
+    , unsafeParseCurrency
+    ) where
 
-import ClassyPrelude
+import ClassyPrelude.Yesod hiding (count)
 import Import.Utilities
-import Control.Error (hush)
 
 -- for parsing
 import Data.Char (isDigit)
@@ -35,21 +33,6 @@ unsafeGetCurrency (Currency cents) = cents
 unsafeMakeCurrency :: Cents -> Currency
 unsafeMakeCurrency = Currency
 
-{-
---
--- ** Persistent Interoperability
---
-
-instance PersistField Currency where
-    toPersistValue (Currency cents) = PersistInt64 cents
-    fromPersistValue (PersistInt64 cents) = Right $ Currency cents
-    fromPersistValue _ = Left "Currency value was not properly stored in\
-        \ database."
-
-
-instance PersistFieldSql Currency where
-    sqlType _ = SqlInt64
--}
 --------------------------------------------------------------------------------
 
 toCurrency :: Dollars -> Cents -> Currency
@@ -60,8 +43,8 @@ fromCurrency (Currency cents) = cents `divMod` 100
 
 -- | Convert a Currency value into a properly formatted Text. Can convert back
 -- into Currency by using 'parseCurrency'. Hence:
---      parseCurrencyUnsafe . formatCurrency == id
---  ==  formatCurrency . parseCurrencyUnsafe
+--      unsafeParseCurrency . formatCurrency == id
+--  ==  formatCurrency . unsafeParseCurrency
 formatCurrency :: Currency -> Text
 formatCurrency cur = showT d ++ "." ++ showCents
   where
@@ -98,7 +81,7 @@ parseCurrency = hush . parseOnly currencyParser . filter (/= ' ')
 -- | Throws an error in case of failure instead of using Maybe type. Intended
 -- to be used only where we can guarantee that a Currency value is properly
 -- formatted as Text.
-parseCurrencyUnsafe :: Text -> Currency
-parseCurrencyUnsafe t = case parseOnly currencyParser $ filter (/= ' ') t of
+unsafeParseCurrency :: Text -> Currency
+unsafeParseCurrency t = case parseOnly currencyParser $ filter (/= ' ') t of
     Right c -> c
     _ -> error "Currency did not parse properly"

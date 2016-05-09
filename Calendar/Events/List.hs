@@ -14,7 +14,6 @@ import Network.HTTP.Simple
 import Data.Aeson.TH
 
 import Calendar (CalendarId(..))
-import Calendar.Events
 import GoogleAPI.Auth (QueryParams, bqp, addServerKey,
     AccessToken, addGoogleAPIAuthHeader)
 
@@ -38,7 +37,7 @@ data EventsListResponse = EventsListResponse
         -- retrieve only the entries that have changed since this result was
         -- returned. Omitted if further results are available, in which case
         -- nextPageToken is provided.
-    , elItems :: [Event]
+    , elItems :: [CalendarEvent]
     } deriving (Eq, Read, Show)
 $(deriveFromJSON defaultOptions{fieldLabelModifier = unCapitalize . drop 2} ''EventsListResponse)
 
@@ -61,7 +60,7 @@ data EventsListQueries = EventsListQueries
     }
 
 data OrderBy
-    = StartTime
+    = StartTime -- ^ Order by the start date/time (ascending).
     | Updated
     deriving (Eq, Show)
 
@@ -77,7 +76,7 @@ defaultEventsListQueries :: EventsListQueries
 defaultEventsListQueries = EventsListQueries
     { elqMaxAttendees = Just 1
     , elqMaxResults = Just 2500
-    , elqOrderBy = Nothing
+    , elqOrderBy = Just StartTime
     , elqSearchTerms = []
     , elqSingleEvents = Just True
     , elqTimeMax = Nothing

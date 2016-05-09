@@ -1,12 +1,11 @@
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 
-module Model.Persistent.Field.CaseInsensitive where
+module Model.PersistField.CaseInsensitive where
 
-import ClassyPrelude
+import ClassyPrelude.Yesod
 import Import.Utilities
 
 -- for making new Persistent data fields.
-import Database.Persist.Types
 import Database.Persist.Sql
 
 import Data.CaseInsensitive (CI)

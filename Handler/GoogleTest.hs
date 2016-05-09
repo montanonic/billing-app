@@ -1,21 +1,24 @@
 module Handler.GoogleTest where
 
 import Import
-{-
+
 import Data.Aeson
 import Network.HTTP.Simple
-import Data.Time.Clock
-import Data.Time.LocalTime
 
 import GoogleAPI.Auth
 import Calendar
-import Calendar.Events
 import Calendar.Events.List
--}
 
-getGoogleTestR :: UserId -> Handler Html
-getGoogleTestR _ = error "this function is just for testing and doesn't matter"
-
+getGoogleTestR :: Handler Html
+getGoogleTestR = do
+    mtoken <- maybeAccessToken
+    case mtoken of
+        Nothing -> error "failure"
+        Just token -> do
+            r <- join $ httpJSON <$>
+                defaultEventsListRequest defaultCalendarId token
+            let body = fromJSON (getResponseBody r) :: Result EventsListResponse
+            defaultLayout $ [whamlet|<p>#{show body}|]
 
 {-      do
     mtoken <- (map AccessToken . userAccessToken) <$> (runDB $ get404 uid)

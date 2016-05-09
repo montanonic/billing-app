@@ -35,6 +35,7 @@ import System.Log.FastLogger                (defaultBufSize, newStdoutLoggerSet,
 import Handler.Common
 import Handler.GoogleTest
 import Handler.Home
+import Handler.InvoiceLayout
 import Handler.InvoiceProfile.Create
 import Handler.InvoiceProfile.InvoiceProfiles
 import Handler.InvoiceProfile.View

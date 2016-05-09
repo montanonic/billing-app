@@ -6,10 +6,15 @@
 
 / HomeR GET
 
-/google/#UserId GoogleTestR GET
+/google GoogleTestR GET
+
+
+/invoice-profile/create CreateInvoiceProfileR GET POST
 
 -- shows all your Invoice Profiles
-invoice-profile/ InvoiceProfilesR GET
+/invoice-profile/ InvoiceProfilesR GET
+
 -- view an individual Invoice Profile
-invoice-profile/#InvoiceProfileId ViewInvoiceProfileR GET
-!/invoice-profile/create CreateInvoiceProfileR GET POST
+!/invoice-profile/#InvoiceProfileId ViewInvoiceProfileR GET
+
+/invoice-profile/#InvoiceProfileId/layout InvoiceLayoutR GET

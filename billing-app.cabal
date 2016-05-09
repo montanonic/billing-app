@@ -15,7 +15,6 @@ library
     hs-source-dirs: ., app
     exposed-modules: Application
                      Calendar
-                     Calendar.Events
                      Calendar.Events.List
                      Foundation
                      Form.InvoiceProfile
@@ -28,15 +27,18 @@ library
                      Import.Utilities
                      Import.AgdaUtils.Either
                      Model
+                     Model.CalendarEvents
                      Model.Currency
                      Model.InvoiceProfile
-                     Model.Persistent.Field.CaseInsensitive
-                     Model.Persistent.Field.Currency
+                     Model.PersistField.CaseInsensitive
+                     Model.PersistField.Currency
+                     Model.PersistField.TimeZone
                      Settings
                      Settings.StaticFiles
                      Handler.Common
                      Handler.GoogleTest
                      Handler.Home
+                     Handler.InvoiceLayout
                      Handler.InvoiceProfile.Create
                      Handler.InvoiceProfile.InvoiceProfiles
                      Handler.InvoiceProfile.View
@@ -68,6 +70,7 @@ library
                 RankNTypes
                 ScopedTypeVariables
                 NamedFieldPuns
+                BangPatterns
 
     build-depends: base                          >= 4          && < 5
                  , yesod                         >= 1.4.1      && < 1.5

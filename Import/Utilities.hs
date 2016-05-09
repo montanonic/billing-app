@@ -1,6 +1,12 @@
-module Import.Utilities where
+module Import.Utilities
+    ( module Import.Utilities
+    ) where
 
-import ClassyPrelude
+import ClassyPrelude.Yesod
+
+import Control.Error           as Import.Utilities hiding (catMaybes, readMay,
+    tryIO, tryJust, headMay, lastMay, maximumMay, minimumMay, initDef, tailDef)
+import Import.AgdaUtils.Either as Import.Utilities
 
 showT :: (Show a) => a -> Text
 showT = pack . show
@@ -31,3 +37,7 @@ mapFilter mp filt = foldr (\a rest ->
     if filt b
         then b `cons` rest
         else rest) mempty
+
+unCapitalize :: String -> String
+unCapitalize [] = []
+unCapitalize (h:t) = headEx (toLower [h]) : t

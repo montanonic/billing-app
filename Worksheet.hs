@@ -1,6 +1,6 @@
 module Worksheet where
 
-import ClassyPrelude hiding (Reader, ask)
+import ClassyPrelude.Yesod hiding (Reader, ask)
 
 newtype Reader r a = Reader { runReader :: r -> a }
 

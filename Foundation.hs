@@ -56,18 +56,6 @@ clientId = "574596987605-ep6t83nlm4he43ugm0cmrma50t3foff7.apps.googleusercontent
 clientSecret :: Text
 clientSecret = "QvXX_Bp9MctdUkqQZfRnNPdX"
 
---------------------------------------------------------------------------------
-
---
--- ** Generic helper functions
---
-
-unCapitalize :: String -> String
-unCapitalize [] = []
-unCapitalize (h:t) = headEx (toLower [h]) : t
-
---------------------------------------------------------------------------------
-
 -- This is where we define all of the routes in our application. For a full
 -- explanation of the syntax, please see:
 -- http://www.yesodweb.com/book/routing-and-handlers
